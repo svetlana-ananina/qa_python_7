@@ -30,8 +30,8 @@ def generate_random_courier_data():
     # возвращаем словарь
     return login_data
 
-def register_courier(user_data):
-    # отправляем запрос на регистрацию курьера и сохраняем ответ в переменную response
+def create_courier(user_data):
+    # отправляем запрос на создание курьера и сохраняем ответ в переменную response
     if _debug:
         print(f'requests.post("{url.SERVER_URL}{ep.CREATE_COURIER}", data={user_data})')
 
@@ -44,4 +44,30 @@ def register_courier(user_data):
         print(f'response.json() = {response.json()}')
 
     return response
+
+def register_courier(user_data):
+    # отправляем запрос на регистрацию курьера в системе и сохраняем ответ
+    # формируем данные для запроса: логин и пароль курьера
+    payload = {
+        "login": user_data["login"],
+        "password": user_data["password"]
+    }
+
+    if _debug:
+        print(f'requests.post("{url.SERVER_URL}{ep.LOGIN_COURIER}", payload={payload})')
+
+    # response = requests.post('https://qa-scooter.praktikum-services.ru/api/v1/courier', data=payload)
+    response = requests.post(f'{url.SERVER_URL}{ep.LOGIN_COURIER}', data=payload)
+
+    if _debug:
+        print(f'response.status_code = {response.status_code}')
+        print(f'response.text = {response.text}')
+        print(f'response.json() = {response.json()}')
+
+    return response
+
+def delete_courier(user_id):
+    # отправляем запрос на регистрацию курьера и сохраняем ответ в переменную response
+    # return response
+    pass
 
