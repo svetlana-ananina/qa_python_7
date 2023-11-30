@@ -1,62 +1,59 @@
-import requests
 import pytest
 import allure
 
-
-from data import URLS as url
-from data import ENDPOINTS as ep
 from data import STATUS_CODES as code
-import helpers
+from data import RESPONSE_KEYS as KEYS
 
 from data import _debug as _debug
+from helpers.helpers_on_check_response import check_status_code, check_key_and_value_in_body
+from helpers.helpers_on_create_courier import generate_random_courier_data, create_courier, register_courier
+from helpers.helpers_on_delete_courier import delete_courier_by_user_data
 
 
 # метод создания нового курьера, возвращает данные нового курьера: логин, пароль и имя
-# если создание не успешно, возвращает None
 @allure.step('Создаем нового курьера')
 @pytest.fixture()
 def create_new_courier():
-    # собираем тело запроса =данные нового курьера
-    user_data = helpers.generate_random_courier_data()
+    # собираем тело запроса = данные нового курьера
+    user_data = generate_random_courier_data()
 
+    if _debug:
+        print(f'\nСоздаем нового курьера: user_data="{user_data}"')
     # отправляем запрос на создание нового курьера и сохраняем ответ в переменную response
-    #response = requests.post('https://qa-scooter.praktikum-services.ru/api/v1/courier', data=payload)
-    response = helpers.create_courier(user_data)
+    response = create_courier(user_data)
+    # возвращаем ответ API и данные пользователя
+    yield response, user_data
 
-    # если регистрация прошла успешно (код ответа 201), возвращаем данные нового курьера
-    if response.status_code == code.CREATED:
-        return user_data
-    else:
-        return None
+    # удаляем данные после окончания теста
+    if _debug:
+        print(f'\nУдаляем курьера: user_data="{user_data}"')
+    delete_courier_by_user_data(user_data)
+
 
 # метод создания и регистрации нового курьера, возвращает данные курьера: логин, пароль, имя и id
-# если регистрация не удалась, возвращает None
 @allure.step('Создаем и регистрируем нового курьера')
 @pytest.fixture()
-def register_new_courier(create_new_courier):
+def register_new_courier():
+    # формируем данные нового курьера
+    user_data = generate_random_courier_data()
 
-    # создаем нового курьера и получаем его данные
-    #   user_data - словарь с полями login, password, firstName
-    user_data = create_new_courier
-    if user_data is None:
-        return None
     if _debug:
-        print(f'user_data = {user_data}')
+        print(f'\nСоздаем нового курьера: user_data="{user_data}"')
+    # отправляем запрос на создание нового курьера и сохраняем ответ в переменную response
+    response = create_courier(user_data)
+    # проверяем что курьер создан: код ответа 201, тело ответа {'ok' = True}
+    check_status_code(response, code.CREATED)
+    check_key_and_value_in_body(response, KEYS.OK_KEY, True)
 
+    if _debug:
+        print('\nРегистрируем курьера/получаем его id: user_data="{user_data}"')
     # отправляем запрос на регистрацию курьера
-    response = helpers.register_courier(user_data)
+    response = register_courier(user_data)
+    # возвращаем ответ API и данные пользователя
+    yield response, user_data
 
-    # проверяем что регистрация прошла успешно: код ответа 200
-    if response.status_code != code.OK:  # 200
-        return None
-    # получаем id курьера и сохраняем его
-    user_id = response.json()['id']
+    # удаляем данные после окончания теста
     if _debug:
-        print(f'user_id = {user_id}')
-
-    user_data['id'] = user_id
-    if _debug:
-        print(f'user_data = {user_data}')
-
-    return user_data
+        print(f'\nУдаляем курьера: user_data="{user_data}"')
+    delete_courier_by_user_data(user_data)
 
