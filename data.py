@@ -1,13 +1,17 @@
 class URLS:
     SERVER_URL = 'http://qa-scooter.praktikum-services.ru'
 
+
 class ENDPOINTS:
     CREATE_COURIER  = '/api/v1/courier'
     LOGIN_COURIER   = '/api/v1/courier/login'
     DELETE_COURIER  = '/api/v1/courier/'              # '/api/v1/courier/:id'
+    CREATE_ORDER    = '/api/v1/orders'
+
 
 _debug = True
 #_debug = False
+
 
 class STATUS_CODES:
     CREATED     = 201
@@ -16,6 +20,7 @@ class STATUS_CODES:
     OK          = 200
     NOT_FOUND   = 404
 
+
 class RESPONSE_MESSAGES:
     OK_TEXT                 = 'ok'
     CREATE_BAD_REQUEST      = 'Недостаточно данных для создания учетной записи'
@@ -23,10 +28,38 @@ class RESPONSE_MESSAGES:
     LOGIN_BAD_REQUEST       = 'Недостаточно данных для входа'
     LOGIN_NOT_FOUND         = 'Учетная запись не найдена'
 
+
 class RESPONSE_KEYS:
     MESSAGE_KEY = 'message'
-    OK_KEY  = 'ok'
-    ID_KEY  = 'id'
-    LOGIN = 'login'
-    PASSWORD = 'password'
+    OK_KEY      = 'ok'
+    ID_KEY      = 'id'
+    LOGIN       = 'login'
+    PASSWORD    = 'password'
+    TRACK       = 'track'
+
+
+class ORDER_FIELDS:
+    FIRST_NAME  = 'firstName'
+    LAST_NAME   = 'lastName'
+    ADDRESS     = 'address'
+    METRO_STATION = 'metroStation'
+    PHONE       = 'phone'
+    RENT_TIME   = 'rentTime'
+    DELIVERY_DATE = 'deliveryDate'
+    COMMENT     = 'comment'
+    COLOR       = 'color'
+    COLOR_BLACK = 'BLACK'
+    COLOR_GREY  = 'GREY'
+
+
+ORDER_DATA = {
+    'firstName'     : "Иван",
+    'lastName'      : "Иванов",
+    'address'       : "Русаковская улица, 22",
+    'metroStation'  : 4,
+    'phone'         : "+79999999999",
+     'rentTime'     : 1,
+    'deliveryDate'  : "01.01.2024",
+    'comment'       : "Позвоните за полчаса"
+}
 

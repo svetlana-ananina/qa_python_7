@@ -12,7 +12,7 @@ from data import _debug as _debug
 def check_status_code(response, expected_code):
     # проверяем что получен код ответа expected_code
     received_code = response.status_code
-    assert received_code == expected_code, f'Неверный код в ответе: ожидался {expected_code}, получен код "{received_code}", текст: "{response.text}"'
+    assert received_code == expected_code, f'Неверный код в ответе: ожидался {expected_code}, получен "{received_code}", ответ: "{response.text}"'
 
 
 @allure.step('Проверяем наличие ключа в ответе')
@@ -51,4 +51,12 @@ def check_user_id(response):
     check_status_code(response, code.OK)
     check_key_in_body(response, KEYS.ID_KEY)
     return response.json()[KEYS.ID_KEY]
+
+
+@allure.step('Получаем трек заказа из ответа запроса на создание заказа')
+def check_order_track(response):
+    # проверяем что получен код ответа 201 и в ответе есть track - номер заказа (число)
+    check_status_code(response, code.CREATED)
+    check_key_in_body(response, KEYS.TRACK)
+    return response.json()[KEYS.TRACK]
 
