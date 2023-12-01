@@ -16,7 +16,6 @@ from helpers.helpers_on_delete_courier import delete_courier_by_user_data
 def create_new_courier():
     # собираем тело запроса = данные нового курьера
     user_data = generate_random_courier_data()
-
     if _debug:
         print(f'\nСоздаем нового курьера: user_data="{user_data}"')
     # отправляем запрос на создание нового курьера и сохраняем ответ в переменную response
@@ -36,7 +35,6 @@ def create_new_courier():
 def register_new_courier():
     # формируем данные нового курьера
     user_data = generate_random_courier_data()
-
     if _debug:
         print(f'\nСоздаем нового курьера: user_data="{user_data}"')
     # отправляем запрос на создание нового курьера и сохраняем ответ в переменную response
@@ -44,9 +42,8 @@ def register_new_courier():
     # проверяем что курьер создан: код ответа 201, тело ответа {'ok' = True}
     check_status_code(response, code.CREATED)
     check_key_and_value_in_body(response, KEYS.OK_KEY, True)
-
     if _debug:
-        print('\nРегистрируем курьера/получаем его id: user_data="{user_data}"')
+        print(f'Регистрируем курьера/получаем его id: user_data="{user_data}"')
     # отправляем запрос на регистрацию курьера
     response = register_courier(user_data)
     # возвращаем ответ API и данные пользователя

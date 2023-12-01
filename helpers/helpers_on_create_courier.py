@@ -36,21 +36,20 @@ def generate_random_courier_data():
     return login_data
 
 
-@allure.step('Отправляем запрос на создание нового курьера')
+@allure.step('Отправляем API-запрос на создание нового курьера')
 def create_courier(payload):
     # отправляем запрос на создание курьера и возвращаем ответ
     request_url = f'{url.SERVER_URL}{ep.CREATE_COURIER}'
     if _debug:
         print('\nОтправляем запрос на создание нового курьера')
         print(f'request_url="{request_url}", payload="{payload}"')
-    # return requests.post(f'{request_url}', data=payload)
     response = requests.post(f'{request_url}', data=payload)
     if _debug:
         print(f'response={response}, response.text={response.text}')
     return response
 
 
-@allure.step('Отправляем запрос на регистрацию курьера/получение id уже зарегистрированного курьера')
+@allure.step('Отправляем API-запрос на регистрацию нового курьера/получение id курьера')
 def register_courier(payload):
     # формируем данные для запроса: логин и пароль курьера
     request_url = f'{url.SERVER_URL}{ep.LOGIN_COURIER}'
@@ -58,7 +57,6 @@ def register_courier(payload):
         print('\nОтправляем запрос на регистрацию курьера/получение его id')
         print(f'request_url="{request_url}", payload="{payload}"')
     # отправляем запрос на регистрацию курьера в системе и возвращаем ответ
-    # return requests.post(f'{request_url}', data=payload)
     response = requests.post(f'{request_url}', data=payload)
     if _debug:
         print(f'response={response}, response.text={response.text}')

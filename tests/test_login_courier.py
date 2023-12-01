@@ -32,7 +32,7 @@ class TestLoginCourier:
         assert str(user_id).isdigit(), f'Неверный id курьера: ожидалось число, получен id = {user_id}'
 
 
-    @pytest.mark.parametrize('key', ['login', 'password'])
+    @pytest.mark.parametrize('key', [KEYS.LOGIN, KEYS.PASSWORD])
     @allure.title('Проверяем, что если не передано поле логина или пароля, запрос возвращает ошибку 400')
     def test_login_courier_missing_field_error(self, create_new_courier, key):
         if _debug:
@@ -55,7 +55,7 @@ class TestLoginCourier:
 
 
     # @pytest.mark.usefixtures("create_new_courier")
-    @pytest.mark.parametrize('field_key, field_value', [('login', ''), ('password', '')])
+    @pytest.mark.parametrize('field_key, field_value', [(KEYS.LOGIN, ''), (KEYS.PASSWORD, '')])
     @allure.title('Проверяем, что если передано пустое поле логина или пароля, запрос возвращает ошибку 400')
     def test_login_courier_empty_field_error(self, create_new_courier, field_key, field_value):
         if _debug:
@@ -78,7 +78,7 @@ class TestLoginCourier:
         check_message(response, text.LOGIN_BAD_REQUEST)
 
 
-    @pytest.mark.parametrize('field_key, field_value', [('login', '12345'), ('password', '12345')])
+    @pytest.mark.parametrize('field_key, field_value', [(KEYS.LOGIN, '12345'), (KEYS.PASSWORD, '12345')])
     @allure.title('Проверяем, что если если неправильно указать логин или пароль, запрос возвращает ошибку 404')
     def test_login_courier_invalid_login_error(self, create_new_courier, field_key, field_value):
         if _debug:
