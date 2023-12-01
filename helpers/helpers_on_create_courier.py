@@ -43,7 +43,11 @@ def create_courier(payload):
     if _debug:
         print('\nОтправляем запрос на создание нового курьера')
         print(f'request_url="{request_url}", payload="{payload}"')
-    return requests.post(f'{request_url}', data=payload)
+    # return requests.post(f'{request_url}', data=payload)
+    response = requests.post(f'{request_url}', data=payload)
+    if _debug:
+        print(f'response={response}, response.text={response.text}')
+    return response
 
 
 @allure.step('Отправляем запрос на регистрацию курьера/получение id уже зарегистрированного курьера')
@@ -54,5 +58,9 @@ def register_courier(payload):
         print('\nОтправляем запрос на регистрацию курьера/получение его id')
         print(f'request_url="{request_url}", payload="{payload}"')
     # отправляем запрос на регистрацию курьера в системе и возвращаем ответ
-    return requests.post(f'{request_url}', data=payload)
+    # return requests.post(f'{request_url}', data=payload)
+    response = requests.post(f'{request_url}', data=payload)
+    if _debug:
+        print(f'response={response}, response.text={response.text}')
+    return response
 

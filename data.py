@@ -14,14 +14,14 @@ class STATUS_CODES:
     BAD_REQUEST = 400
     CONFLICT    = 409
     OK          = 200
+    NOT_FOUND   = 404
 
 class RESPONSE_MESSAGES:
-    OK_TEXT = 'ok'
-    # MESSAGE_TEXT = 'message'
-    # NOT_ALL_DATA_RECEIVED_TEXT = 'Недостаточно данных для создания учетной записи'
-    CREATE_BAD_REQUEST = 'Недостаточно данных для создания учетной записи'
+    OK_TEXT                 = 'ok'
+    CREATE_BAD_REQUEST      = 'Недостаточно данных для создания учетной записи'
     LOGIN_ALREADY_USED_TEXT = 'Этот логин уже используется'
-    LOGIN_BAD_REQUEST = 'Недостаточно данных для входа'
+    LOGIN_BAD_REQUEST       = 'Недостаточно данных для входа'
+    LOGIN_NOT_FOUND         = 'Учетная запись не найдена'
 
 class RESPONSE_KEYS:
     MESSAGE_KEY = 'message'
