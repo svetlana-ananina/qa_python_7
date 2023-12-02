@@ -11,10 +11,6 @@ class ENDPOINTS:
     BY_COURIER_ID   = '?courierId='                      # '?courierId=<:id>'
 
 
-_debug = True
-#_debug = False
-
-
 class STATUS_CODES:
     CREATED     = 201
     BAD_REQUEST = 400
