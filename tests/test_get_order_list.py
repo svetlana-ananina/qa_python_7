@@ -1,24 +1,16 @@
-import pytest
 import allure
 
 from data import STATUS_CODES as code
-from data import RESPONSE_MESSAGES as text
-from data import RESPONSE_KEYS as KEYS
-from data import ORDER_FIELDS as order_field
 
 from helpers.helpers_on_check_response import check_status_code, check_key_and_value_in_body, check_message, \
     check_order_track, check_field_order_in_order_list_response, check_order_list_is_not_empty, check_order_is_not_empty
 from helpers.helpers_on_create_order import generate_order_data, create_order, get_order_list
-
-from data import _debug as _debug
 
 
 class TestGetOrderList:
 
     @allure.title('Проверяем получение списка заказов')
     def test_get_order_list(self):
-        if _debug:
-            print('\n============================= Проверяем получение списка заказов =============================')
         # получаем список заказов
         response = get_order_list()
         # проверяем что получен код ответа 200

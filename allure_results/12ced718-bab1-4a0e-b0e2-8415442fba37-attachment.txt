@@ -1,0 +1,15 @@
+
+Создаем нового курьера: user_data="{'login': 'avwtnbtczu', 'password': 'hnnlhoedna', 'firstName': 'oqjcnbrwfh'}"
+
+Отправляем запрос на создание нового курьера
+request_url="http://qa-scooter.praktikum-services.ru/api/v1/courier", payload="{'login': 'avwtnbtczu', 'password': 'hnnlhoedna', 'firstName': 'oqjcnbrwfh'}"
+response=<Response [201]>, response.text={"ok":true}
+
+============================= Проверяем, что можно создать нового курьера =============================
+
+Удаляем курьера: user_data="{'login': 'avwtnbtczu', 'password': 'hnnlhoedna', 'firstName': 'oqjcnbrwfh'}"
+
+Отправляем запрос на регистрацию курьера/получение его id
+request_url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login", payload="{'login': 'avwtnbtczu', 'password': 'hnnlhoedna', 'firstName': 'oqjcnbrwfh'}"
+response=<Response [200]>, response.text={"id":239349}
+Отправляем запрос на удаление курьера: request_url="http://qa-scooter.praktikum-services.ru/api/v1/courier/239349"

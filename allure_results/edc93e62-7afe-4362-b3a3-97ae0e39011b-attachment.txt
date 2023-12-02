@@ -1,0 +1,20 @@
+
+Создаем нового курьера: user_data="{'login': 'yfmckikmmy', 'password': 'hglwdkjkas', 'firstName': 'awwhjrtmgd'}"
+
+Отправляем запрос на создание нового курьера
+request_url="http://qa-scooter.praktikum-services.ru/api/v1/courier", payload="{'login': 'yfmckikmmy', 'password': 'hglwdkjkas', 'firstName': 'awwhjrtmgd'}"
+response=<Response [201]>, response.text={"ok":true}
+
+============================= Проверяем, что если передано пустое поле "password", запрос возвращает ошибку 400 =============================
+key="password", value=""
+
+Отправляем запрос на регистрацию курьера/получение его id
+request_url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login", payload="{'login': 'yfmckikmmy', 'password': '', 'firstName': 'awwhjrtmgd'}"
+response=<Response [400]>, response.text={"code":400,"message":"Недостаточно данных для входа"}
+
+Удаляем курьера: user_data="{'login': 'yfmckikmmy', 'password': 'hglwdkjkas', 'firstName': 'awwhjrtmgd'}"
+
+Отправляем запрос на регистрацию курьера/получение его id
+request_url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login", payload="{'login': 'yfmckikmmy', 'password': 'hglwdkjkas', 'firstName': 'awwhjrtmgd'}"
+response=<Response [200]>, response.text={"id":239373}
+Отправляем запрос на удаление курьера: request_url="http://qa-scooter.praktikum-services.ru/api/v1/courier/239373"

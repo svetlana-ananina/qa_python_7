@@ -1,0 +1,19 @@
+
+Создаем нового курьера: user_data="{'login': 'zgdgabonpi', 'password': 'grfylkyify', 'firstName': 'juzxotpfmr'}"
+
+Отправляем запрос на создание нового курьера
+request_url="http://qa-scooter.praktikum-services.ru/api/v1/courier", payload="{'login': 'zgdgabonpi', 'password': 'grfylkyify', 'firstName': 'juzxotpfmr'}"
+response=<Response [201]>, response.text={"ok":true}
+
+============================= Проверяем, что если если неправильно указать логин или пароль, запрос возвращает ошибку 404 =============================
+
+Отправляем запрос на регистрацию курьера/получение его id
+request_url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login", payload="{'login': '12345', 'password': 'grfylkyify', 'firstName': 'juzxotpfmr'}"
+response=<Response [404]>, response.text={"code":404,"message":"Учетная запись не найдена"}
+
+Удаляем курьера: user_data="{'login': 'zgdgabonpi', 'password': 'grfylkyify', 'firstName': 'juzxotpfmr'}"
+
+Отправляем запрос на регистрацию курьера/получение его id
+request_url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login", payload="{'login': 'zgdgabonpi', 'password': 'grfylkyify', 'firstName': 'juzxotpfmr'}"
+response=<Response [200]>, response.text={"id":239359}
+Отправляем запрос на удаление курьера: request_url="http://qa-scooter.praktikum-services.ru/api/v1/courier/239359"

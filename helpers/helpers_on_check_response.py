@@ -1,13 +1,8 @@
 import allure
 
-from data import URLS as url
-from data import ENDPOINTS as ep
 from data import STATUS_CODES as code
 from data import RESPONSE_KEYS as KEYS
 from data import ORDER_FIELDS as order_fields
-
-
-from data import _debug as _debug
 
 
 @allure.step('Проверяем код ответа')
@@ -63,27 +58,20 @@ def check_order_track(response):
     return response.json()[KEYS.TRACK]
 
 
-@allure.step('Проверяем, что в ответе на запрос списка заказов есть ключ "orders"')
+@allure.step('Проверяем, что в ответе есть ключ "orders"')
 def check_field_order_in_order_list_response(response):
-    if _debug:
-        print(f'response = "{response}"')
-        print(f'response.text = "{response.text}"')
     # Получаем тело ответа в виде json()
     response_body = response.json()
-    if _debug:
-        print(f'response_body = {response_body}')
-        print(f'type(response_body[KEYS.ORDERS]) = {type(response_body[KEYS.ORDERS])}')
     # проверяем, что в теле ответа есть поле "orders"
     assert KEYS.ORDERS in response_body
     # возвращаем содержимое поля "orders"
     return response_body[KEYS.ORDERS]
 
+
 @allure.step('Проверяем, что поле "orders" содержит список и он не пустой')
 def check_order_list_is_not_empty(order_list):
     assert type(order_list) is list
     assert len(order_list) >= 0
-    if _debug:
-        print(f'order_list[0] = {order_list[0]}')
     return order_list[0]
 
 
@@ -106,9 +94,8 @@ def check_order_is_not_empty(order):
     return True
 
 
+@allure.step('Проверяем, что заказ содержит поле {field}')
 def check_field_in_order(order, field):
-    if _debug:
-        print(f'field "{field}" in order: {field in order}')
     assert field in order
     return True
 

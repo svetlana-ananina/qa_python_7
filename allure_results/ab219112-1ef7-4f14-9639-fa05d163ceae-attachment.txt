@@ -1,0 +1,19 @@
+
+Создаем нового курьера: user_data="{'login': 'jpevapjrsi', 'password': 'ofotkjesij', 'firstName': 'juyaexlqei'}"
+
+Отправляем запрос на создание нового курьера
+request_url="http://qa-scooter.praktikum-services.ru/api/v1/courier", payload="{'login': 'jpevapjrsi', 'password': 'ofotkjesij', 'firstName': 'juyaexlqei'}"
+response=<Response [201]>, response.text={"ok":true}
+
+============================= Проверяем, что если не передано поле "login", запрос возвращает ошибку 400 =============================
+
+Отправляем запрос на регистрацию курьера/получение его id
+request_url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login", payload="{'password': 'ofotkjesij', 'firstName': 'juyaexlqei'}"
+response=<Response [400]>, response.text={"code":400,"message":"Недостаточно данных для входа"}
+
+Удаляем курьера: user_data="{'login': 'jpevapjrsi', 'password': 'ofotkjesij', 'firstName': 'juyaexlqei'}"
+
+Отправляем запрос на регистрацию курьера/получение его id
+request_url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login", payload="{'login': 'jpevapjrsi', 'password': 'ofotkjesij', 'firstName': 'juyaexlqei'}"
+response=<Response [200]>, response.text={"id":239355}
+Отправляем запрос на удаление курьера: request_url="http://qa-scooter.praktikum-services.ru/api/v1/courier/239355"
