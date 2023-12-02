@@ -1,8 +1,0 @@
-
-============================= Проверяем, что можно создать заказ с указанием любого цвета =============================
-
-Отправляем запрос на создание заказа
-request_url="http://qa-scooter.praktikum-services.ru/api/v1/orders", 
-payload={'firstName': 'Иван', 'lastName': 'Иванов', 'address': 'Русаковская улица, 22', 'metroStation': 4, 'phone': '+79999999999', 'rentTime': 1, 'deliveryDate': '01.01.2024', 'comment': 'Позвоните за полчаса', 'color': ['BLACK', 'GREY']}
-response=<Response [201]>, response.text={"track":695697}
-track = "695697"
