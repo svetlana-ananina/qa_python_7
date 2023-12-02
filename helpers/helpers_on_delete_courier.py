@@ -12,7 +12,9 @@ from data import _debug as _debug
 
 @allure.step('Отправляем API-запрос на удаление курьера')
 def delete_courier(user_id):
-    request_url = f'{url.SERVER_URL}{ep.DELETE_COURIER}'+str(user_id)
+    # превращаем полученный user_id в строку
+    user_id =  str(user_id)
+    request_url = f'{url.SERVER_URL}{ep.DELETE_COURIER}'+user_id
     if _debug:
         print(f'\nУдаляем курьера user_id="{user_id}"')
     # отправляем запрос на регистрацию курьера и сохраняем ответ в переменную response

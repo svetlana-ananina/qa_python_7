@@ -24,12 +24,13 @@ class STATUS_CODES:
 
 
 class RESPONSE_MESSAGES:
-    OK_TEXT                 = 'ok'
-    CREATE_BAD_REQUEST      = 'Недостаточно данных для создания учетной записи'
-    LOGIN_ALREADY_USED_TEXT = 'Этот логин уже используется'
-    LOGIN_BAD_REQUEST       = 'Недостаточно данных для входа'
-    LOGIN_NOT_FOUND         = 'Учетная запись не найдена'
-
+    OK_TEXT                     = 'ok'
+    CREATE_BAD_REQUEST          = 'Недостаточно данных для создания учетной записи'
+    LOGIN_ALREADY_USED_TEXT     = 'Этот логин уже используется'
+    LOGIN_BAD_REQUEST           = 'Недостаточно данных для входа'
+    LOGIN_NOT_FOUND             = 'Учетная запись не найдена'
+    DELETE_COURIER_BAD_REQUEST  = 'Недостаточно данных для удаления курьера'
+    DELETE_COURIER_NOT_FOUND    = 'Курьера с таким id нет'
 
 class RESPONSE_KEYS:
     MESSAGE_KEY = 'message'
