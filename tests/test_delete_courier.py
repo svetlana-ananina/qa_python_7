@@ -28,8 +28,8 @@ class TestDeleteCourier:
         check_key_and_value_in_body(response, KEYS.OK_KEY, True)
 
 
-    @allure.title('Проверяем, что если отправить запрос без id, вернётся ошибка')
-    def test_delete_courier_missing_id_error(self, register_new_courier):
+    @allure.title('Проверяем, что если отправить запрос без id, запрос вернет код ошибки 400')
+    def test_delete_courier_missing_id_error_code(self, register_new_courier):
         # задаем пустой user_id
         user_id = ""
         # направляем запрос на удаление с пустым id
@@ -39,11 +39,26 @@ class TestDeleteCourier:
         # проверяем что получен код ответа 400
         check_status_code(response, code.BAD_REQUEST)
         # проверяем сообщение об ошибке
+        # check_message(response, text.DELETE_COURIER_BAD_REQUEST)
+
+
+    @allure.title('Проверяем сообщение об ошибке, если отправить запрос без id')
+    def test_delete_courier_missing_id_error_message(self, register_new_courier):
+        # задаем пустой user_id
+        user_id = ""
+        # направляем запрос на удаление с пустым id
+        response = delete_courier(user_id)
+        if _debug:
+            print(f'\nresponse="{response}", response.text="{response.text}"')
+        # проверяем что получен код ответа 1xx-4xx
+        received_code = response.status_code
+        assert received_code < 500, f'Невозможно проверить сообщения об ошибке: получен код {received_code}, ответ сервера "{response.text}"'
+        # проверяем сообщение об ошибке
         check_message(response, text.DELETE_COURIER_BAD_REQUEST)
 
 
-    @allure.title('Проверяем, что если отправить запрос с несуществующим id, вернётся ошибка')
-    def test_delete_courier_invalid_id_error(self, register_new_courier):
+    @allure.title('Проверяем, что если отправить запрос с несуществующим id, запрос вернет код ошибки 400')
+    def test_delete_courier_invalid_id_error_code(self, register_new_courier):
         # задаем несуществующий user_id = 0
         user_id = "0"
         # направляем запрос на удаление с id = 0
@@ -52,6 +67,21 @@ class TestDeleteCourier:
             print(f'\nresponse="{response}", response.text="{response.text}"')
         # проверяем что получен код ответа 404
         check_status_code(response, code.NOT_FOUND)
+        # проверяем сообщение об ошибке
+        # check_message(response, text.DELETE_COURIER_NOT_FOUND)
+
+
+    @allure.title('Проверяем сообщение об ошибке, что если отправить запрос с несуществующим id')
+    def test_delete_courier_invalid_id_error_message(self, register_new_courier):
+        # задаем несуществующий user_id = 0
+        user_id = "0"
+        # направляем запрос на удаление с id = 0
+        response = delete_courier(user_id)
+        if _debug:
+            print(f'\nresponse="{response}", response.text="{response.text}"')
+        # проверяем что получен код ответа 1xx-4xx
+        received_code = response.status_code
+        assert received_code < 500, f'Невозможно проверить сообщения об ошибке: получен код {received_code}, ответ сервера "{response.text}"'
         # проверяем сообщение об ошибке
         check_message(response, text.DELETE_COURIER_NOT_FOUND)
 
