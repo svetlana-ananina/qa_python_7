@@ -7,6 +7,8 @@ import allure
 from data import URLS as url
 from data import ENDPOINTS as ep
 
+from data import _debug as _debug
+
 
 # метод генерирует строку, состоящую только из букв нижнего регистра, в качестве параметра передаём длину строки
 def generate_random_string(length):
@@ -35,14 +37,17 @@ def generate_random_courier_data():
 def create_courier(payload):
     # отправляем запрос на создание курьера и возвращаем ответ
     request_url = f'{url.SERVER_URL}{ep.CREATE_COURIER}'
+    if _debug:
+        print(f'\nСоздаем нового курьера: payload="{payload}"')
     response = requests.post(f'{request_url}', data=payload)
     return response
 
 
 @allure.step('Отправляем API-запрос на регистрацию нового курьера/получение id курьера')
 def register_courier(payload):
-    # формируем данные для запроса: логин и пароль курьера
     request_url = f'{url.SERVER_URL}{ep.LOGIN_COURIER}'
+    if _debug:
+        print(f'\nРегистрируем нового курьера/получаем его user_id/проверяем, что курьер существует: payload="{payload}"')
     # отправляем запрос на регистрацию курьера в системе и возвращаем ответ
     response = requests.post(f'{request_url}', data=payload)
     return response

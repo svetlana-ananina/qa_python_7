@@ -4,7 +4,7 @@ import allure
 from data import STATUS_CODES as code
 from data import RESPONSE_KEYS as KEYS
 
-from helpers.helpers_on_check_response import check_status_code, check_key_and_value_in_body
+from helpers.helpers_on_check_response import check_status_code, check_key_and_value_in_body, check_user_id
 from helpers.helpers_on_create_courier import generate_random_courier_data, create_courier, register_courier
 from helpers.helpers_on_delete_courier import delete_courier_by_user_data
 
@@ -37,8 +37,11 @@ def register_new_courier():
     check_key_and_value_in_body(response, KEYS.OK_KEY, True)
     # отправляем запрос на регистрацию курьера
     response = register_courier(user_data)
+    # получаем id курьера
+    user_id = check_user_id(response)
+
     # возвращаем ответ API и данные пользователя
-    yield response, user_data
+    yield user_id, user_data
 
     # удаляем данные после окончания теста
     delete_courier_by_user_data(user_data)

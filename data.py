@@ -1,3 +1,7 @@
+_debug = True
+# _debug = False
+
+
 class URLS:
     SERVER_URL = 'http://qa-scooter.praktikum-services.ru'
 
