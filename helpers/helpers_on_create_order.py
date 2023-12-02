@@ -14,6 +14,7 @@ from data import ORDER_DATA
 
 
 from data import _debug as _debug
+from helpers.helpers_on_check_response import check_status_code, check_key_in_body, check_order_track
 
 
 @allure.step('Генерируем данные для заказа')
@@ -35,4 +36,29 @@ def create_order(payload):
         print(f'response={response}, response.text={response.text}')
     return response
 
+
+@allure.step('Отправляем API-запрос на получение списка заказов')
+def get_order_list():
+    # отправляем запрос на создание заказа и возвращаем ответ
+    request_url = f'{url.SERVER_URL}{ep.GET_ORDER_LIST}'
+    if _debug:
+        print('\nОтправляем запрос на получение списка заказов')
+        print(f'request_url="{request_url}"')
+    response = requests.get(f'{request_url}')
+    if _debug:
+        print(f'response={response}, response.text={response.text}')
+    return response
+
+
+@allure.step('Отправляем API-запрос на получение списка заказов для курьера')
+def get_order_list_by_courier_id(payload):
+    # отправляем запрос на создание заказа и возвращаем ответ
+    request_url = f'{url.SERVER_URL}{ep.GET_ORDER_LIST}'
+    if _debug:
+        print('\nОтправляем запрос на получение списка заказов')
+        print(f'request_url="{request_url}"')
+    response = requests.get(f'{request_url}')
+    if _debug:
+        print(f'response={response}, response.text={response.text}')
+    return response
 
