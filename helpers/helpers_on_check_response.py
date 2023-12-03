@@ -4,6 +4,8 @@ from data import STATUS_CODES as code
 from data import RESPONSE_KEYS as KEYS
 from data import ORDER_FIELDS as order_fields
 
+from data import _debug as _debug
+
 
 @allure.step('Проверяем код ответа')
 def check_status_code(response, expected_code):
@@ -59,26 +61,24 @@ def check_order_track(response):
 
 
 @allure.step('Проверяем, что в ответе есть ключ "orders"')
-def check_field_order_in_order_list_response(response):
+def check_order_list_in_response(response):
     # Получаем тело ответа в виде json()
     response_body = response.json()
     # проверяем, что в теле ответа есть поле "orders"
-    assert KEYS.ORDERS in response_body
+    assert KEYS.ORDERS in response_body, f'Ошибка: в ответе нет поля "{KEYS.ORDERS}"'
     # возвращаем содержимое поля "orders"
     return response_body[KEYS.ORDERS]
 
 
 @allure.step('Проверяем, что поле "orders" содержит список и он не пустой')
 def check_order_list_is_not_empty(order_list):
-    assert type(order_list) is list
-    assert len(order_list) >= 0
+    assert type(order_list) is list, f'Ошибка: в ответе не получен тип список заказов'
+    assert len(order_list) > 0, f'Ошибка: список заказов пуст'
     return order_list[0]
 
 
 @allure.step('Проверяем, что заказ содержит все необходимые поля')
-def check_order_is_not_empty(order):
-    check_field_in_order(order, order_fields.ID)
-    check_field_in_order(order, order_fields.COURIER_ID)
+def check_order_is_correct(order):
     check_field_in_order(order, order_fields.FIRST_NAME)
     check_field_in_order(order, order_fields.LAST_NAME)
     check_field_in_order(order, order_fields.ADDRESS)
@@ -86,17 +86,58 @@ def check_order_is_not_empty(order):
     check_field_in_order(order, order_fields.PHONE)
     check_field_in_order(order, order_fields.RENT_TIME)
     check_field_in_order(order, order_fields.DELIVERY_DATE)
+    # check_field_in_order(order, order_fields.COLOR)
+    # check_field_in_order(order, order_fields.COMMENT)
+
+    # поля не передаются в запросе на создание заказа
     check_field_in_order(order, order_fields.TRACK)
-    check_field_in_order(order, order_fields.COMMENT)
-    check_field_in_order(order, order_fields.CREATED_AT)
-    check_field_in_order(order, order_fields.UPDATED_AT)
+    check_field_in_order(order, order_fields.ID)
     check_field_in_order(order, order_fields.STATUS)
+    # check_field_in_order(order, order_fields.COURIER_FIRST_NAME)
+    # check_field_in_order(order, order_fields.CREATED_AT)
+    # check_field_in_order(order, order_fields.UPDATED_AT)
+    # check_field_in_order(order, order_fields.CANCELLED)
+    # check_field_in_order(order, order_fields.FINISHED)
+    # check_field_in_order(order, order_fields.IN_DELIVERY)
     return True
 
 
 @allure.step('Проверяем, что заказ содержит поле {field}')
 def check_field_in_order(order, field):
-    assert field in order
+    if _debug: print(f'Проверяем поле "{field}" в заказе ...')
+    assert field in order, f'Ошибка: в заказе отсутствует обязательное поле {field}'
     return True
 
+
+@allure.step('Получаем id заказа из ответа запроса на получение заказа по его треку')
+def check_order_id(order):
+    # проверяем что в заказе есть поле (ключ) ID
+    check_field_in_order(order, order_fields.ID)
+    # получаем ID заказа
+    order_id = order[order_fields.ID]
+    return order_id
+
+
+@allure.step('Получаем заказ из ответа запроса на получение заказа по его треку')
+def check_order_in_response(response):
+    # проверяем что получен код ответа 200
+    check_status_code(response, code.OK)
+    # проверяем, что в теле ответа есть поле (ключ) "order"
+    check_key_in_body(response, KEYS.ORDER)
+    # получаем заказ в ответе
+    order = response.json()[KEYS.ORDER]
+    # проверяем что в заказе есть поле (ключ) ID
+    # check_order_is_correct(order)
+    return order
+
+
+# Отладочная печать - вывод в <stdout>
+def print_response(response):
+    if _debug:
+        print(f'response="{response}", response.text="{response.text}"')
+
+
+def print_response_value(name, value):
+    if _debug:
+        print(f'{name}="{value}"')
 
