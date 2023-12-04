@@ -48,6 +48,7 @@ def register_new_courier():
     # получаем id курьера
     user_id = check_user_id(response)
     # возвращаем id курьера
+    if _debug: print_response_value('user_id', user_id)
     if _debug: print('\nОкончание работы фикстуры "register_new_courier()"...')
     yield user_id
 

@@ -13,7 +13,7 @@ class TestCreateOrder:
     @allure.title('Проверяем, что можно создать заказ')
     def test_create_order(self, create_order):
         # создаем новый заказ и проверяем код ответа
-        create_order
+        track = create_order
 
     @pytest.mark.parametrize('color', [
         [order_field.COLOR_BLACK],
