@@ -64,7 +64,7 @@ def check_order_track(response):
     return check_key_in_body(response, KEYS.TRACK)
 
 
-@allure.step('Проверяем, что в ответе есть ключ "orders"')
+@allure.step('Проверяем, что в ответе есть поле "orders"')
 def check_order_list_in_response(response):
     # Получаем тело ответа в виде json()
     response_body = response.json()
@@ -74,7 +74,7 @@ def check_order_list_in_response(response):
     return response_body[KEYS.ORDERS]
 
 
-@allure.step('Проверяем, что поле "orders" содержит список и он не пустой')
+@allure.step('Проверяем, что поле "orders" содержит непустой список')
 def check_order_list_is_not_empty(order_list):
     assert type(order_list) is list, f'Ошибка: в ответе не получен тип список заказов'
     assert len(order_list) > 0, f'Ошибка: список заказов пуст'
@@ -83,13 +83,13 @@ def check_order_list_is_not_empty(order_list):
 
 @allure.step('Проверяем, что заказ содержит поле {field}')
 def check_field_in_order(order, field):
-    if _debug: print(f'Проверяем поле "{field}" в заказе ...')
+    _print_info(f'Проверяем поле "{field}" в заказе ...')
     assert field in order, f'Ошибка: в заказе отсутствует поле {field}'
     # return True
     return order[field]
 
 
-@allure.step('Получаем id заказа из ответа запроса на получение заказа по его треку')
+@allure.step('Получаем id заказа из ответа на запрос')
 def check_order_id(order):
     # проверяем что в заказе есть поле (ключ) ID
     # получаем ID заказа
@@ -102,7 +102,7 @@ def check_track_in_order(order):
     return check_field_in_order(order, order_fields.TRACK)
 
 
-@allure.step('Получаем заказ из ответа запроса на получение заказа по его треку')
+@allure.step('Получаем заказ из ответа на запрос')
 def check_order_in_response(response):
     # проверяем что получен код ответа 200
     check_status_code(response, code.OK)
@@ -111,13 +111,18 @@ def check_order_in_response(response):
     return check_key_in_body(response, KEYS.ORDER)
 
 
-# Отладочная печать - вывод в <stdout>
-def print_response(response):
+# Логирование - вывод в <stdout>
+def _print_response(response):
     if _debug:
         print(f'response="{response}", response.text="{response.text}"')
 
 
-def print_response_value(name, value):
+def _print_response_value(name, value):
     if _debug:
         print(f'{name}="{value}"')
+
+
+def _print_info(info_str):
+    if _debug:
+        print(info_str)
 

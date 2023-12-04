@@ -9,7 +9,7 @@ from helpers.helpers_on_create_order import get_order, get_order_by_param
 
 class TestGetOrder:
 
-    @allure.title('Проверяем получение заказа по его треку (номеру)')
+    @allure.title('Проверяем получение заказа по его трек-номеру')
     def test_get_order_success(self, register_new_courier, create_order):
         # создаем и регистрируем нового курьера и получаем его данные
         user_id = register_new_courier
@@ -25,7 +25,7 @@ class TestGetOrder:
         assert track_in_order == track
 
 
-    @allure.title('Проверяем получение заказа по его номеру: запрос без номера заказа возвращает ошибку')
+    @allure.title('Проверяем получение заказа по его трек-номеру: запрос без номера заказа возвращает ошибку')
     def test_get_order_missing_track(self, register_new_courier, create_order):
         # создаем и регистрируем нового курьера и получаем его данные
         user_id = register_new_courier
@@ -39,7 +39,7 @@ class TestGetOrder:
         check_message(response, text.GET_ORDER_BAD_REQUEST)
 
 
-    @allure.title('Проверяем получение заказа по его номеру: запрос несуществующим номером заказа возвращает ошибку')
+    @allure.title('Проверяем получение заказа по его трек-номеру: запрос с несуществующим номером заказа возвращает ошибку')
     def test_get_order_invalid_track(self, register_new_courier, create_order):
         # создаем и регистрируем нового курьера и получаем его данные
         user_id = register_new_courier

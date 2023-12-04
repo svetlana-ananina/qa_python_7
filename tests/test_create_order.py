@@ -4,7 +4,7 @@ import allure
 from data import STATUS_CODES as code
 from data import ORDER_FIELDS as order_field
 
-from helpers.helpers_on_check_response import check_status_code, check_key_and_value_in_body, check_message, check_order_track
+from helpers.helpers_on_check_response import check_status_code, check_order_track
 from helpers.helpers_on_create_order import generate_order_data, create_new_order
 
 

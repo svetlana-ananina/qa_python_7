@@ -1,7 +1,3 @@
-_debug = True
-# _debug = False
-
-
 class URLS:
     SERVER_URL = 'http://qa-scooter.praktikum-services.ru'
 
@@ -40,6 +36,7 @@ class RESPONSE_MESSAGES:
     ACCEPT_COURIER_ID_NOT_FOUND = 'Курьера с таким id не существует'
     GET_ORDER_BAD_REQUEST       = 'Недостаточно данных для поиска'
     GET_ORDER_NOT_FOUND         = 'Заказ не найден'
+
 
 class RESPONSE_KEYS:
     MESSAGE_KEY = 'message'
