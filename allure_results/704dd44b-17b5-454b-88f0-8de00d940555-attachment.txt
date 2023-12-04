@@ -1,0 +1,18 @@
+
+Запуск фикстуры "create_new_courier()"...
+
+Отправляем запрос на создание нового курьера: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier" payload="{'login': 'kzmggqrjyv', 'password': 'nrplhkfnyn', 'firstName': 'rmdyznvdpq'}"
+response="<Response [201]>", response.text="{"ok":true}"
+
+Окончание работы фикстуры create_new_courier()"...
+
+Отправляем запрос на создание нового курьера: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier" payload="{'password': 'tqtsoqlwxv', 'firstName': 'zjlxxvfwfv'}"
+response="<Response [400]>", response.text="{"code":400,"message":"Недостаточно данных для создания учетной записи"}"
+
+Запуск teardown фикстуры "create_new_courier()"...
+
+Отправляем запрос на регистрацию нового курьера/получение его id: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login" payload="{'login': 'kzmggqrjyv', 'password': 'nrplhkfnyn', 'firstName': 'rmdyznvdpq'}"
+response="<Response [200]>", response.text="{"id":240141}"
+
+Направляем запрос на удаление курьера user_id="240141": DELETE url="request_url"
+response="<Response [200]>", response.text="{"ok":true}"

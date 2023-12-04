@@ -1,0 +1,15 @@
+
+Запуск фикстуры "create_new_courier()"...
+
+Отправляем запрос на создание нового курьера: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier" payload="{'login': 'ggwkrprqmr', 'password': 'rmrecficfo', 'firstName': 'qkmvigveek'}"
+response="<Response [201]>", response.text="{"ok":true}"
+
+Окончание работы фикстуры create_new_courier()"...
+
+Запуск teardown фикстуры "create_new_courier()"...
+
+Отправляем запрос на регистрацию нового курьера/получение его id: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login" payload="{'login': 'ggwkrprqmr', 'password': 'rmrecficfo', 'firstName': 'qkmvigveek'}"
+response="<Response [200]>", response.text="{"id":240140}"
+
+Направляем запрос на удаление курьера user_id="240140": DELETE url="request_url"
+response="<Response [200]>", response.text="{"ok":true}"

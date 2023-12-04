@@ -1,0 +1,27 @@
+
+Запуск фикстуры "create_new_courier()"...
+
+Отправляем запрос на создание нового курьера: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier" payload="{'login': 'tvpzqwbnme', 'password': 'jdbaearups', 'firstName': 'ymykcfnfzx'}"
+response="<Response [201]>", response.text="{"ok":true}"
+
+Окончание работы фикстуры create_new_courier()"...
+
+Запуск фикстуры "register_new_courier()"...
+
+Отправляем запрос на регистрацию нового курьера/получение его id: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login" payload="{'login': 'tvpzqwbnme', 'password': 'jdbaearups', 'firstName': 'ymykcfnfzx'}"
+response="<Response [200]>", response.text="{"id":240147}"
+user_id="240147"
+
+Окончание работы фикстуры "register_new_courier()"...
+
+Направляем запрос на удаление курьера user_id="": DELETE url="request_url"
+response="<Response [404]>", response.text="{"code":404,"message":"Not Found."}"
+response="<Response [404]>", response.text="{"code":404,"message":"Not Found."}"
+
+Запуск teardown фикстуры "create_new_courier()"...
+
+Отправляем запрос на регистрацию нового курьера/получение его id: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login" payload="{'login': 'tvpzqwbnme', 'password': 'jdbaearups', 'firstName': 'ymykcfnfzx'}"
+response="<Response [200]>", response.text="{"id":240147}"
+
+Направляем запрос на удаление курьера user_id="240147": DELETE url="request_url"
+response="<Response [200]>", response.text="{"ok":true}"

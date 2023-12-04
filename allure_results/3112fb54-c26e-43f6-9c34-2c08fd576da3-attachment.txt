@@ -1,0 +1,43 @@
+
+Запуск фикстуры "create_new_courier()"...
+
+Отправляем запрос на создание нового курьера: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier" payload="{'login': 'deftdnurso', 'password': 'obazxafnsr', 'firstName': 'gpuestujig'}"
+response="<Response [201]>", response.text="{"ok":true}"
+
+Окончание работы фикстуры create_new_courier()"...
+
+Запуск фикстуры "register_new_courier()"...
+
+Отправляем запрос на регистрацию нового курьера/получение его id: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login" payload="{'login': 'deftdnurso', 'password': 'obazxafnsr', 'firstName': 'gpuestujig'}"
+response="<Response [200]>", response.text="{"id":240139}"
+user_id="240139"
+
+Окончание работы фикстуры "register_new_courier()"...
+
+Запуск фикстуры "create_order()"
+
+Создаем новый заказ: POST url="http://qa-scooter.praktikum-services.ru/api/v1/orders", payload="{'firstName': 'Иван', 'lastName': 'Иванов', 'address': 'Русаковская улица, 22', 'metroStation': 4, 'phone': '+79999999999', 'rentTime': 1, 'deliveryDate': '01.01.2024', 'comment': 'Позвоните за полчаса'}"
+response="<Response [201]>", response.text="{"track":599277}"
+track="599277"
+
+Окончание фикстуры "create_order()"...
+
+Запуск фикстуры "create_order_and_get_order_id()"
+
+Отправляем API-запрос на получение заказа по его трек-номеру: GET url="http://qa-scooter.praktikum-services.ru/api/v1/orders/track?t=599277"
+response="<Response [200]>", response.text="{"order":{"id":223333,"firstName":"Иван","lastName":"Иванов","address":"Русаковская улица, 22","metroStation":"4","phone":"+79999999999","rentTime":1,"deliveryDate":"2023-12-31T21:00:00.000Z","track":599277,"color":null,"comment":"Позвоните за полчаса","cancelled":false,"finished":false,"inDelivery":false,"createdAt":"2023-12-04T17:50:16.904Z","updatedAt":"2023-12-04T17:50:16.904Z","status":0}}"
+Проверяем поле "id" в заказе ...
+order_id="223333"
+
+Окончание фикстуры "create_order_and_get_order_id()"...
+
+Отправляем запрос принять заказ: PUT url="http://qa-scooter.praktikum-services.ru/api/v1/orders/accept/223333?courierId=0", param="223333?courierId=0"
+response="<Response [404]>", response.text="{"code":404,"message":"Курьера с таким id не существует"}"
+
+Запуск teardown фикстуры "create_new_courier()"...
+
+Отправляем запрос на регистрацию нового курьера/получение его id: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login" payload="{'login': 'deftdnurso', 'password': 'obazxafnsr', 'firstName': 'gpuestujig'}"
+response="<Response [200]>", response.text="{"id":240139}"
+
+Направляем запрос на удаление курьера user_id="240139": DELETE url="request_url"
+response="<Response [200]>", response.text="{"ok":true}"

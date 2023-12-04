@@ -1,0 +1,18 @@
+
+Запуск фикстуры "create_new_courier()"...
+
+Отправляем запрос на создание нового курьера: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier" payload="{'login': 'kiihptaulj', 'password': 'mdyunrtmbm', 'firstName': 'rclihpahos'}"
+response="<Response [201]>", response.text="{"ok":true}"
+
+Окончание работы фикстуры create_new_courier()"...
+
+Отправляем запрос на создание нового курьера: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier" payload="{'login': 'kiihptaulj', 'password': 'mdyunrtmbm', 'firstName': 'rclihpahos'}"
+response="<Response [409]>", response.text="{"code":409,"message":"Этот логин уже используется. Попробуйте другой."}"
+
+Запуск teardown фикстуры "create_new_courier()"...
+
+Отправляем запрос на регистрацию нового курьера/получение его id: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login" payload="{'login': 'kiihptaulj', 'password': 'mdyunrtmbm', 'firstName': 'rclihpahos'}"
+response="<Response [200]>", response.text="{"id":240143}"
+
+Направляем запрос на удаление курьера user_id="240143": DELETE url="request_url"
+response="<Response [200]>", response.text="{"ok":true}"

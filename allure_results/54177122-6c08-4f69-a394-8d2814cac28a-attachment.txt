@@ -1,0 +1,23 @@
+
+Запуск фикстуры "create_new_courier()"...
+
+Отправляем запрос на создание нового курьера: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier" payload="{'login': 'yyxdgookwz', 'password': 'oxhanqxlvp', 'firstName': 'cladlklkqu'}"
+response="<Response [201]>", response.text="{"ok":true}"
+
+Окончание работы фикстуры create_new_courier()"...
+
+Запуск фикстуры "register_new_courier()"...
+
+Отправляем запрос на регистрацию нового курьера/получение его id: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login" payload="{'login': 'yyxdgookwz', 'password': 'oxhanqxlvp', 'firstName': 'cladlklkqu'}"
+response="<Response [200]>", response.text="{"id":240145}"
+user_id="240145"
+
+Окончание работы фикстуры "register_new_courier()"...
+
+Направляем запрос на удаление курьера user_id="240145": DELETE url="request_url"
+response="<Response [200]>", response.text="{"ok":true}"
+
+Запуск teardown фикстуры "create_new_courier()"...
+
+Отправляем запрос на регистрацию нового курьера/получение его id: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login" payload="{'login': 'yyxdgookwz', 'password': 'oxhanqxlvp', 'firstName': 'cladlklkqu'}"
+response="<Response [404]>", response.text="{"code":404,"message":"Учетная запись не найдена"}"
