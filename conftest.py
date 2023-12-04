@@ -5,9 +5,9 @@ from data import STATUS_CODES as code
 from data import RESPONSE_KEYS as KEYS
 
 from helpers.helpers_on_check_response import check_status_code, check_key_and_value_in_body, check_user_id, \
-    check_order_track, print_response_value
+    check_order_track, print_response_value, check_order_in_response, check_order_id
 from helpers.helpers_on_create_courier import generate_random_courier_data, create_courier, register_courier
-from helpers.helpers_on_create_order import generate_order_data, create_new_order
+from helpers.helpers_on_create_order import generate_order_data, create_new_order, get_order
 from helpers.helpers_on_delete_courier import delete_courier_by_user_data
 
 from data import _debug as _debug
@@ -71,4 +71,21 @@ def create_order():
     if _debug: print_response_value('track', track)
     if _debug: print('\nОкончание фикстуры "create_order()"...')
     return track
+
+
+@allure.title('Создаем новый заказ и получаем его id')
+@pytest.fixture()
+def create_order_and_get_order_id(create_order):
+    if _debug: print('\nЗапуск фикстуры "create_order_and_get_order_id()"')
+    track = create_order
+    # получаем заказ по его треку
+    response = get_order(track)
+    # проверяем ответ и получаем заказ из ответа
+    order = check_order_in_response(response)
+    # получаем ID заказа
+    order_id = check_order_id(order)
+    if _debug: print_response_value('order_id', order_id)
+    if _debug: print('\nОкончание фикстуры "create_order_and_get_order_id()"...')
+    return order_id
+
 

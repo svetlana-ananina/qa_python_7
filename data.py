@@ -12,7 +12,8 @@ class ENDPOINTS:
     DELETE_COURIER  = '/api/v1/courier/'                # DELETE '/api/v1/courier/:id'
     CREATE_ORDER    = '/api/v1/orders'                  # POST '/api/v1/orders'
     GET_ORDER_LIST  = '/api/v1/orders'                  # GET '/api/v1/orders'
-    BY_TRACK        = '/track?t='                       # GET '/track?t=<track>'
+    GET_ORDER       = '/api/v1/orders/track'            # GET '/api/v1/orders?t=<track_id>'
+    BY_TRACK        = '?t='                              # '?t=<track>'
     ACCEPT_ORDER    = '/api/v1/orders/accept/'          # PUT '/api/v1/orders/accept/:id'
 
     BY_COURIER_ID   = '?courierId='                     # '?courierId=<id>'         ???
@@ -34,6 +35,11 @@ class RESPONSE_MESSAGES:
     LOGIN_NOT_FOUND             = 'Учетная запись не найдена'
     DELETE_COURIER_BAD_REQUEST  = 'Недостаточно данных для удаления курьера'
     DELETE_COURIER_NOT_FOUND    = 'Курьера с таким id нет'
+    ACCEPT_BAD_REQUEST          = 'Недостаточно данных для поиска'
+    ACCEPT_ORDER_ID_NOT_FOUND   = 'Заказа с таким id не существует'
+    ACCEPT_COURIER_ID_NOT_FOUND = 'Курьера с таким id не существует'
+    GET_ORDER_BAD_REQUEST       = 'Недостаточно данных для поиска'
+    GET_ORDER_NOT_FOUND         = 'Заказ не найден'
 
 class RESPONSE_KEYS:
     MESSAGE_KEY = 'message'

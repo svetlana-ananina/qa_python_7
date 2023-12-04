@@ -57,6 +57,7 @@ def check_order_track(response):
     # проверяем что получен код ответа 201 и в ответе есть track - номер заказа (число)
     check_status_code(response, code.CREATED)
     check_key_in_body(response, KEYS.TRACK)
+    # Возвращаем трек (номер) заказа
     return response.json()[KEYS.TRACK]
 
 

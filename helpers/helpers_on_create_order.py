@@ -35,21 +35,44 @@ def get_order_list():
     return response
 
 
-@allure.step('Отправляем API-запрос принять заказ с параметрами: id - номер заказа, courierId - id курьера')
-def accept_order(id, courier_id):
-    request_url = f'{url.SERVER_URL}{ep.ACCEPT_ORDER}' + str(id) + f'{ep.BY_COURIER_ID}' + str(courier_id)
-    if _debug: print(f'\nОтправляем запрос принять заказ: PUT url="{request_url}", id="{id}", courier_id="{courier_id}"')
-    response = requests.put(f'{request_url}')
+def get_order(track):
+    # трек задан
+    param = f'{ep.BY_TRACK}' + str(track)
+    response = get_order_by_param(param)
     if _debug: print_response(response)
     return response
 
 
 @allure.step('Отправляем API-запрос на получение заказа по его треку')
-def get_order(track):
-    request_url = f'{url.SERVER_URL}{ep.GET_ORDER_LIST}{ep.BY_TRACK}' + str(track)
-    if _debug: print(f'\nОтправляем API-запрос на получение заказа по его треку: GET url="{request_url}", track="{track}"')
+def get_order_by_param(param):
+    request_url = f'{url.SERVER_URL}{ep.GET_ORDER}' + str(param)        # url + '/api/v1/orders/track' + 'param'
+    if _debug: print(f'\nОтправляем API-запрос на получение заказа по его треку: GET url="{request_url}"')
     response = requests.get(f'{request_url}')
     if _debug: print_response(response)
     return response
+
+
+@allure.step('Отправляем API-запрос принять заказ с разными query-параметрами')
+def accept_order_by_param(param):
+    request_url = f'{url.SERVER_URL}{ep.ACCEPT_ORDER}' + str(param)
+    if _debug: print(f'\nОтправляем запрос принять заказ: PUT url="{request_url}", param="{param}"')
+    response = requests.put(f'{request_url}')
+    if _debug: print_response(response)
+    return response
+
+
+def accept_order(id, courier_id):
+    param = str(id) + f'{ep.BY_COURIER_ID}' + str(courier_id)
+    return accept_order_by_param(param)
+
+
+def accept_order_by_order_id(id):
+    param = str(id)
+    return accept_order_by_param(param)
+
+
+def accept_order_by_courier_id(courier_id):
+    param = f'{ep.BY_COURIER_ID}' + str(courier_id)
+    return accept_order_by_param(param)
 
 
