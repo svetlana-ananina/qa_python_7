@@ -39,7 +39,6 @@ def get_order(track):
     # трек задан
     param = f'{ep.BY_TRACK}' + str(track)
     response = get_order_by_param(param)
-    if _debug: print_response(response)
     return response
 
 

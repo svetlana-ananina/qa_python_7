@@ -4,11 +4,8 @@ from data import STATUS_CODES as code
 from data import RESPONSE_MESSAGES as text
 from data import RESPONSE_KEYS as KEYS
 
-from helpers.helpers_on_check_response import check_status_code, check_key_and_value_in_body, check_message, \
-    check_order_track, check_order_list_in_response, check_order_list_is_not_empty, check_order_is_correct, \
-    check_order_id, check_order_in_response
-from helpers.helpers_on_create_order import generate_order_data, get_order_list, accept_order, get_order, \
-    accept_order_by_order_id, accept_order_by_courier_id
+from helpers.helpers_on_check_response import check_status_code, check_key_and_value_in_body, check_message
+from helpers.helpers_on_create_order import  accept_order, accept_order_by_order_id, accept_order_by_courier_id
 
 
 class TestAcceptOrder:

@@ -29,8 +29,8 @@ def check_message(response, expected_message):
 def check_key_in_body(response, key):
     # проверяем что в ответе есть ключ key
     received_text = response.text
-    received_body = response.json()
-    assert key in received_body, f'В ответе отсутствует ключ "{key}", получен ответ: "{received_text}"'
+    assert key in response.json(), f'В ответе отсутствует ключ "{key}", получен ответ: "{received_text}"'
+    return response.json()[key]
 
 
 @allure.step('Проверяем значение ключа в ответе')
@@ -48,17 +48,20 @@ def check_key_and_value_in_body(response, key, value):
 def check_user_id(response):
     # проверяем что получен код ответа 200 и в ответе есть id курьера
     check_status_code(response, code.OK)
-    check_key_in_body(response, KEYS.ID_KEY)
-    return response.json()[KEYS.ID_KEY]
+    # check_key_in_body(response, KEYS.ID_KEY)
+    # return response.json()[KEYS.ID_KEY]
+    return check_key_in_body(response, KEYS.ID_KEY)
 
 
 @allure.step('Получаем трек заказа из ответа запроса на создание заказа')
 def check_order_track(response):
     # проверяем что получен код ответа 201 и в ответе есть track - номер заказа (число)
     check_status_code(response, code.CREATED)
-    check_key_in_body(response, KEYS.TRACK)
+    # check_key_in_body(response, KEYS.TRACK)
     # Возвращаем трек (номер) заказа
-    return response.json()[KEYS.TRACK]
+    # return response.json()[KEYS.TRACK]
+    # Возвращаем трек (номер) заказа
+    return check_key_in_body(response, KEYS.TRACK)
 
 
 @allure.step('Проверяем, что в ответе есть ключ "orders"')
@@ -78,45 +81,25 @@ def check_order_list_is_not_empty(order_list):
     return order_list[0]
 
 
-@allure.step('Проверяем, что заказ содержит все необходимые поля')
-def check_order_is_correct(order):
-    check_field_in_order(order, order_fields.FIRST_NAME)
-    check_field_in_order(order, order_fields.LAST_NAME)
-    check_field_in_order(order, order_fields.ADDRESS)
-    check_field_in_order(order, order_fields.METRO_STATION)
-    check_field_in_order(order, order_fields.PHONE)
-    check_field_in_order(order, order_fields.RENT_TIME)
-    check_field_in_order(order, order_fields.DELIVERY_DATE)
-    # check_field_in_order(order, order_fields.COLOR)
-    # check_field_in_order(order, order_fields.COMMENT)
-
-    # поля не передаются в запросе на создание заказа
-    check_field_in_order(order, order_fields.TRACK)
-    check_field_in_order(order, order_fields.ID)
-    check_field_in_order(order, order_fields.STATUS)
-    # check_field_in_order(order, order_fields.COURIER_FIRST_NAME)
-    # check_field_in_order(order, order_fields.CREATED_AT)
-    # check_field_in_order(order, order_fields.UPDATED_AT)
-    # check_field_in_order(order, order_fields.CANCELLED)
-    # check_field_in_order(order, order_fields.FINISHED)
-    # check_field_in_order(order, order_fields.IN_DELIVERY)
-    return True
-
-
 @allure.step('Проверяем, что заказ содержит поле {field}')
 def check_field_in_order(order, field):
     if _debug: print(f'Проверяем поле "{field}" в заказе ...')
-    assert field in order, f'Ошибка: в заказе отсутствует обязательное поле {field}'
-    return True
+    assert field in order, f'Ошибка: в заказе отсутствует поле {field}'
+    # return True
+    return order[field]
 
 
 @allure.step('Получаем id заказа из ответа запроса на получение заказа по его треку')
 def check_order_id(order):
     # проверяем что в заказе есть поле (ключ) ID
-    check_field_in_order(order, order_fields.ID)
     # получаем ID заказа
-    order_id = order[order_fields.ID]
-    return order_id
+    return check_field_in_order(order, order_fields.ID)
+
+
+@allure.step('Проверяем track-номер в заказе')
+def check_track_in_order(order):
+    # проверяем что в заказе есть поле (ключ) track и получаем его значение
+    return check_field_in_order(order, order_fields.TRACK)
 
 
 @allure.step('Получаем заказ из ответа запроса на получение заказа по его треку')
@@ -124,12 +107,8 @@ def check_order_in_response(response):
     # проверяем что получен код ответа 200
     check_status_code(response, code.OK)
     # проверяем, что в теле ответа есть поле (ключ) "order"
-    check_key_in_body(response, KEYS.ORDER)
     # получаем заказ в ответе
-    order = response.json()[KEYS.ORDER]
-    # проверяем что в заказе есть поле (ключ) ID
-    # check_order_is_correct(order)
-    return order
+    return check_key_in_body(response, KEYS.ORDER)
 
 
 # Отладочная печать - вывод в <stdout>
