@@ -1,0 +1,43 @@
+
+Запуск фикстуры "create_new_courier()"...
+
+Отправляем запрос на создание нового курьера: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier" payload="{'login': 'ppqqirkrne', 'password': 'penxuhswtv', 'firstName': 'zuzojdlegn'}"
+response="<Response [201]>", response.text="{"ok":true}"
+
+Окончание работы фикстуры create_new_courier()"...
+
+Запуск фикстуры "register_new_courier()"...
+
+Отправляем запрос на регистрацию нового курьера/получение его id: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login" payload="{'login': 'ppqqirkrne', 'password': 'penxuhswtv', 'firstName': 'zuzojdlegn'}"
+response="<Response [200]>", response.text="{"id":240136}"
+user_id="240136"
+
+Окончание работы фикстуры "register_new_courier()"...
+
+Запуск фикстуры "create_order()"
+
+Создаем новый заказ: POST url="http://qa-scooter.praktikum-services.ru/api/v1/orders", payload="{'firstName': 'Иван', 'lastName': 'Иванов', 'address': 'Русаковская улица, 22', 'metroStation': 4, 'phone': '+79999999999', 'rentTime': 1, 'deliveryDate': '01.01.2024', 'comment': 'Позвоните за полчаса'}"
+response="<Response [201]>", response.text="{"track":597133}"
+track="597133"
+
+Окончание фикстуры "create_order()"...
+
+Запуск фикстуры "create_order_and_get_order_id()"
+
+Отправляем API-запрос на получение заказа по его трек-номеру: GET url="http://qa-scooter.praktikum-services.ru/api/v1/orders/track?t=597133"
+response="<Response [200]>", response.text="{"order":{"id":70766,"firstName":"Anton","lastName":"Bednar","address":"365 Casey Springs, Lindgrenbury, SD 98340-2816","metroStation":"Hitmonchan","phone":"281-114-5537","rentTime":8,"deliveryDate":"2011-10-12T00:00:00.000Z","track":597133,"color":[],"comment":"Classic Shmosby","cancelled":false,"finished":false,"inDelivery":false,"createdAt":"2022-06-26T10:03:52.704Z","updatedAt":"2022-06-26T10:03:52.704Z","status":0}}"
+Проверяем поле "id" в заказе ...
+order_id="70766"
+
+Окончание фикстуры "create_order_and_get_order_id()"...
+
+Отправляем запрос принять заказ: PUT url="http://qa-scooter.praktikum-services.ru/api/v1/orders/accept/?courierId=240136", param="?courierId=240136"
+response="<Response [404]>", response.text="{"code":404,"message":"Not Found."}"
+
+Запуск teardown фикстуры "create_new_courier()"...
+
+Отправляем запрос на регистрацию нового курьера/получение его id: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login" payload="{'login': 'ppqqirkrne', 'password': 'penxuhswtv', 'firstName': 'zuzojdlegn'}"
+response="<Response [200]>", response.text="{"id":240136}"
+
+Направляем запрос на удаление курьера user_id="240136": DELETE url="request_url"
+response="<Response [200]>", response.text="{"ok":true}"
