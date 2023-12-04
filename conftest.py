@@ -12,7 +12,7 @@ from helpers.helpers_on_delete_courier import delete_courier_by_user_data
 
 
 # метод создания нового курьера, возвращает данные нового курьера: логин, пароль и имя
-@allure.step('Создаем нового курьера')
+@allure.title('Создаем нового курьера')
 @pytest.fixture()
 def create_new_courier():
     _print_info('\nЗапуск фикстуры "create_new_courier()"...')
@@ -35,12 +35,12 @@ def create_new_courier():
 
 
 # метод создания и регистрации нового курьера, возвращает данные курьера: логин, пароль, имя и id
-@allure.step('Создаем и регистрируем нового курьера')
+@allure.title('Создаем и регистрируем нового курьера')
 @pytest.fixture()
 def register_new_courier(create_new_courier):
     _print_info('\nЗапуск фикстуры "register_new_courier()"...')
     # создаем нового курьера
-    user_data = create_new_courier()
+    user_data = create_new_courier
     # отправляем запрос на регистрацию курьера
     response = register_courier(user_data)
     # получаем id курьера

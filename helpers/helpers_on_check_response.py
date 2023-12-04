@@ -1,10 +1,8 @@
 import allure
 
-from data import STATUS_CODES as code
+from data import STATUS_CODES as code, _to_print
 from data import RESPONSE_KEYS as KEYS
 from data import ORDER_FIELDS as order_fields
-
-from data import _debug as _debug
 
 
 @allure.step('Проверяем код ответа')
@@ -113,16 +111,16 @@ def check_order_in_response(response):
 
 # Логирование - вывод в <stdout>
 def _print_response(response):
-    if _debug:
+    if _to_print:
         print(f'response="{response}", response.text="{response.text}"')
 
 
 def _print_response_value(name, value):
-    if _debug:
+    if _to_print:
         print(f'{name}="{value}"')
 
 
 def _print_info(info_str):
-    if _debug:
+    if _to_print:
         print(info_str)
 
