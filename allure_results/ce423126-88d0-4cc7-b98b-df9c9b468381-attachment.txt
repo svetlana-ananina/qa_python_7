@@ -1,0 +1,35 @@
+
+Запуск фикстуры "create_new_courier()"...
+
+Отправляем запрос на создание нового курьера: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier" payload="{'login': 'pbmmrjwufp', 'password': 'tjamxiakrr', 'firstName': 'hsmiqdohjh'}"
+response="<Response [201]>", response.text="{"ok":true}"
+
+Окончание работы фикстуры create_new_courier()"...
+
+Запуск фикстуры "register_new_courier()"...
+
+Отправляем запрос на регистрацию нового курьера/получение его id: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login" payload="{'login': 'pbmmrjwufp', 'password': 'tjamxiakrr', 'firstName': 'hsmiqdohjh'}"
+response="<Response [200]>", response.text="{"id":240150}"
+user_id="240150"
+
+Окончание работы фикстуры "register_new_courier()"...
+
+Запуск фикстуры "create_order()"
+
+Создаем новый заказ: POST url="http://qa-scooter.praktikum-services.ru/api/v1/orders", payload="{'firstName': 'Иван', 'lastName': 'Иванов', 'address': 'Русаковская улица, 22', 'metroStation': 4, 'phone': '+79999999999', 'rentTime': 1, 'deliveryDate': '01.01.2024', 'comment': 'Позвоните за полчаса'}"
+response="<Response [201]>", response.text="{"track":681381}"
+track="681381"
+
+Окончание фикстуры "create_order()"...
+
+Отправляем API-запрос на получение заказа по его трек-номеру: GET url="http://qa-scooter.praktikum-services.ru/api/v1/orders/track?t=681381"
+response="<Response [200]>", response.text="{"order":{"id":223337,"firstName":"Иван","lastName":"Иванов","address":"Русаковская улица, 22","metroStation":"4","phone":"+79999999999","rentTime":1,"deliveryDate":"2023-12-31T21:00:00.000Z","track":681381,"color":null,"comment":"Позвоните за полчаса","cancelled":false,"finished":false,"inDelivery":false,"createdAt":"2023-12-04T17:50:21.142Z","updatedAt":"2023-12-04T17:50:21.142Z","status":0}}"
+Проверяем поле "track" в заказе ...
+
+Запуск teardown фикстуры "create_new_courier()"...
+
+Отправляем запрос на регистрацию нового курьера/получение его id: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login" payload="{'login': 'pbmmrjwufp', 'password': 'tjamxiakrr', 'firstName': 'hsmiqdohjh'}"
+response="<Response [200]>", response.text="{"id":240150}"
+
+Направляем запрос на удаление курьера user_id="240150": DELETE url="request_url"
+response="<Response [200]>", response.text="{"ok":true}"

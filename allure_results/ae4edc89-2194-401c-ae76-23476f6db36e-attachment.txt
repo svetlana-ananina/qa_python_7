@@ -1,0 +1,34 @@
+
+Запуск фикстуры "create_new_courier()"...
+
+Отправляем запрос на создание нового курьера: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier" payload="{'login': 'wutzhqeive', 'password': 'vnzxvkszzy', 'firstName': 'kdagqofwmx'}"
+response="<Response [201]>", response.text="{"ok":true}"
+
+Окончание работы фикстуры create_new_courier()"...
+
+Запуск фикстуры "register_new_courier()"...
+
+Отправляем запрос на регистрацию нового курьера/получение его id: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login" payload="{'login': 'wutzhqeive', 'password': 'vnzxvkszzy', 'firstName': 'kdagqofwmx'}"
+response="<Response [200]>", response.text="{"id":240152}"
+user_id="240152"
+
+Окончание работы фикстуры "register_new_courier()"...
+
+Запуск фикстуры "create_order()"
+
+Создаем новый заказ: POST url="http://qa-scooter.praktikum-services.ru/api/v1/orders", payload="{'firstName': 'Иван', 'lastName': 'Иванов', 'address': 'Русаковская улица, 22', 'metroStation': 4, 'phone': '+79999999999', 'rentTime': 1, 'deliveryDate': '01.01.2024', 'comment': 'Позвоните за полчаса'}"
+response="<Response [201]>", response.text="{"track":444681}"
+track="444681"
+
+Окончание фикстуры "create_order()"...
+
+Отправляем API-запрос на получение заказа по его трек-номеру: GET url="http://qa-scooter.praktikum-services.ru/api/v1/orders/track0"
+response="<Response [404]>", response.text="{"code":404,"message":"Not Found."}"
+
+Запуск teardown фикстуры "create_new_courier()"...
+
+Отправляем запрос на регистрацию нового курьера/получение его id: POST url="http://qa-scooter.praktikum-services.ru/api/v1/courier/login" payload="{'login': 'wutzhqeive', 'password': 'vnzxvkszzy', 'firstName': 'kdagqofwmx'}"
+response="<Response [200]>", response.text="{"id":240152}"
+
+Направляем запрос на удаление курьера user_id="240152": DELETE url="request_url"
+response="<Response [200]>", response.text="{"ok":true}"
